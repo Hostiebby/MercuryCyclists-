@@ -19,24 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import InventoryDomainModels.Part;
 import InventoryDomainModels.PartModelAssembler;
-import domainModels.Supplier;
 import InventoryExceptionHandlers.PartNotFoundException;
-import exceptionHandlers.SupplierNotFoundException;
 import InventoryRepos.PartRepository;
-import repos.SupplierRepository;
 
 @RestController
 public class PartController{
 	
-	private final SupplierRepository suppRepository;
+	//private final SupplierRepository suppRepository;
 	
 	private final PartRepository repository;
 	private final PartModelAssembler assembler;
 	
-	PartController(SupplierRepository suppRepository, PartRepository repository, PartModelAssembler assembler) {
+	PartController(PartRepository repository, PartModelAssembler assembler) {
 		this.repository = repository;
 		this.assembler = assembler;
-		this.suppRepository = suppRepository;
+		//this.suppRepository = suppRepository;
 		
 	}
 	
@@ -51,8 +48,8 @@ public class PartController{
 	
 	@PostMapping("/parts")
 	ResponseEntity<?> newPart(@RequestBody Part newPart) {
-		Supplier newSupp = suppRepository.findById(newPart.getCompanyName()).orElseThrow(() -> new SupplierNotFoundException(newPart.getCompanyName()));
-		newPart.setSupplier(newSupp);
+		//Supplier newSupp = suppRepository.findById(newPart.getCompanyName()).orElseThrow(() -> new SupplierNotFoundException(newPart.getCompanyName()));
+		//newPart.setSupplier(newSupp);
 		
 //		suppRepository.findById(newContact.getCompanyName()).orElseThrow(() -> new SupplierNotFoundException(newContact.getCompanyName())).pushContact(newContact);
 //		newSupp.pushContact(newContact);
@@ -65,14 +62,14 @@ public class PartController{
 	}	
 	
 	@GetMapping("/parts/{partId}")
-	public EntityModel<Part> one(@PathVariable String partId) {
+	public EntityModel<Part> one(@PathVariable Integer partId) {
 		Part part = repository.findById(partId) //
 				.orElseThrow(() -> new PartNotFoundException(partId));
 		return assembler.toModel(part);
 	}
 	
 	@PutMapping("/parts/{partId}")
-	ResponseEntity<?> replacePart(@RequestBody Part newPart, @PathVariable String partId) {
+	ResponseEntity<?> replacePart(@RequestBody Part newPart, @PathVariable Integer partId) {
 		Part updatedPart = repository.findById(partId) //
 				.map(part -> {
 					part.setPartId(newPart.getpartId());
@@ -93,7 +90,7 @@ public class PartController{
 	}
 	
 	@DeleteMapping("/parts/{PartId}")
-	ResponseEntity<?> deletePart(@PathVariable String PartId) {
+	ResponseEntity<?> deletePart(@PathVariable Integer PartId) {
 		repository.deleteById(PartId);
 		return ResponseEntity.noContent().build();
 	}

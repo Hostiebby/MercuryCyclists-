@@ -9,25 +9,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import domainModels.Supplier;
-
 @Entity
 @Table(name = "parts")
 public class Part {
 	
-	private @Id String partId;
+	private @Id Integer partId;
 	private String name;
 	private String description;
 	private String companyName;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	/*@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "supplier_companyName", nullable = false)
-	private Supplier supplier;
+	private Supplier supplier;*/
 	
 	Part() {}
 	
-	Part(String partId, String name, String description, String companyName){
+	Part(Integer partId, String name, String description, String companyName){
 		this.partId = partId;
 		this.name = name;
 		this.description = description;		
@@ -42,19 +40,19 @@ public class Part {
 		return this.companyName;
 	}
 	
-	public void setSupplier(Supplier supplier) {
+	/*public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
-	}
+	}*/
 	
-	public Supplier getSupplier() {
+	/*public Supplier getSupplier() {
 		return this.supplier;
-	}
+	}*/
 	
 	public String getName() {
 		return this.name;
 	}
 	
-	public String getpartId() {
+	public Integer getpartId() {
 		return this.partId;
 	}
 	
@@ -66,7 +64,7 @@ public class Part {
 		this.name = name;
 	}
 	
-	public void setPartId(String partId) {
+	public void setPartId(Integer partId) {
 		this.partId = partId;
 	}
 	
@@ -85,11 +83,11 @@ public class Part {
 	    return Objects.equals(this.partId, part.partId) && 
 	    		Objects.equals(this.name, part.name) &&
 	    		Objects.equals(this.description,  part.description) &&
-	    		Objects.equals(this.supplier, part.supplier);
+	    		Objects.equals(this.companyName, part.companyName);
 	  }
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.partId, this.name, this.description, this.supplier);
+		return Objects.hash(this.partId, this.name, this.description, this.companyName);
 	}
 }
