@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import domainModels.Part;
-
 @Entity
 @Table(name = "suppliers")
 public class Supplier {
@@ -24,8 +22,8 @@ public class Supplier {
 	@OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Contact> contacts;
 	
-	@OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<Part> parts;
+	//@OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	//private Set<Part> parts;
 	
 	Supplier() {}
 	
@@ -43,13 +41,13 @@ public class Supplier {
 		this.contacts.add(contact);
 	}
 	
-	public Set<Part> displayParts() {
+	/*public Set<Part> displayParts() {
 		return this.parts;
-	}
+	}*/
 	
-	public void pushPart(Part part) {
+	/*public void pushPart(Part part) {
 		this.parts.add(part);
-	}
+	}*/
 	
 	public String getCompanyName() {
 		return this.companyName;

@@ -22,6 +22,8 @@ import domainModels.Supplier;
 import domainModels.SupplierModelAssembler;
 import exceptionHandlers.SupplierNotFoundException;
 import repos.SupplierRepository;
+import services.ApiServices;
+import services.Part;
 
 @RestController
 public class SupplierController{
@@ -29,6 +31,8 @@ public class SupplierController{
 	private final SupplierRepository repository;
 	
 	private final SupplierModelAssembler assembler;
+	
+	private ApiServices apiServices;
 	
 	SupplierController(SupplierRepository repository, SupplierModelAssembler assembler) {
 		this.repository = repository;
@@ -98,6 +102,14 @@ public class SupplierController{
 	    repository.deleteById(companyName);
 	    return ResponseEntity.noContent().build();
 	  }
+	
+	//Part request
+	/*@GetMapping("/suppliers/parts/{partId}")
+	public Supplier partSupplier(@PathVariable("partId") Integer partId){
+		Part getPart = apiServices.getPart(partId);
+		return repository.findById(getPart.getCompanyName()).get();				
+				
+	}*/
 	  
 }
 
