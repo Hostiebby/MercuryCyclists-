@@ -20,13 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import InventoryDomainModels.Part;
 import InventoryDomainModels.Product;
 import InventoryDomainModels.ProductModelAssembler;
-import InventoryDomainModels.Product;
-import InventoryExceptionHandlers.ProductNotFoundException;
 import InventoryExceptionHandlers.ProductNotFoundException;
 import InventoryRepos.PartRepository;
 import InventoryRepos.ProductRepository;
-import InventoryRepos.ProductRepository;
-
 @RestController
 public class ProductController{
 	
