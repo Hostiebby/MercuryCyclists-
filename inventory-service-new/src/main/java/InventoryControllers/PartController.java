@@ -38,7 +38,7 @@ public class PartController{
 		this.assembler = assembler;
 		this.prodRepository = prodRepository;
 		
-	}
+	} 
 	
 	@GetMapping("/parts")
 	public CollectionModel<EntityModel<Part>> all() {
