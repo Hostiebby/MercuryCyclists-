@@ -44,8 +44,7 @@ public class SalesController {
 	public String placeSale(@RequestBody SaleRequest saleRequest) {
 		saleService.placeSale(saleRequest);
 		return "Order placed successfully";
-	}
-	
+	}	
 	
 	
 	@GetMapping
