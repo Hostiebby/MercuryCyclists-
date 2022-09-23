@@ -7,14 +7,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import InventoryControllers.PartController;
+import InventoryControllers.ProductController;
 import InventoryDomainModels.Part;
 import InventoryDomainModels.PartModelAssembler;
+import InventoryDomainModels.Product;
+import InventoryDomainModels.ProductModelAssembler;
 import InventoryRepos.PartRepository;
+import InventoryRepos.ProductRepository;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses = { PartController.class, PartModelAssembler.class })
-@EnableJpaRepositories(basePackageClasses = { PartRepository.class })
-@EntityScan(basePackageClasses = { Part.class })
+@ComponentScan(basePackageClasses = { PartController.class, PartModelAssembler.class, ProductController.class, ProductModelAssembler.class })
+@EnableJpaRepositories(basePackageClasses = { PartRepository.class, ProductRepository.class })
+@EntityScan(basePackageClasses = { Part.class, Product.class })
 public class InventoryServiceApplication {
 
 	public static void main(String[] args) {
