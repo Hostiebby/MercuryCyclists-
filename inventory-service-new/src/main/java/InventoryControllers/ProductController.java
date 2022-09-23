@@ -30,15 +30,12 @@ import InventoryRepos.ProductRepository;
 @RestController
 public class ProductController{
 	
-	private final PartRepository partRepository;
-	
 	private final ProductRepository repository;
 	private final ProductModelAssembler assembler;
 	
 	ProductController(PartRepository partRepository, ProductRepository repository, ProductModelAssembler assembler) {
 		this.repository = repository;
 		this.assembler = assembler;
-		this.partRepository = partRepository;
 	}
 	
 	@GetMapping("/products")
