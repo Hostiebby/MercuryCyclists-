@@ -59,7 +59,7 @@ public class SalesController {
 	
 	
 	
-	@GetMapping("/sales/{SalesId}")
+	@GetMapping("/sales/{salesId}")
 	public EntityModel<Sale> one(@PathVariable String salesId) {
 		Sale sale = repository.findById(salesId) //
 				.orElseThrow();

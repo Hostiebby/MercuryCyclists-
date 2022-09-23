@@ -16,6 +16,6 @@ public class SaleRequest {
 	}
 
 	public void setProductDtoList(List<ProductItemsDto> productDtoList) {
-		this.productDtoList = productDtoList;
+		SaleRequest.productDtoList = productDtoList;
 	}
 }
