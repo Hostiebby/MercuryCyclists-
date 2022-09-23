@@ -17,19 +17,20 @@ public class Part {
 	private String name;
 	private String description;
 	private String companyName;
+	private Integer productId;
 	
-	
-	/*@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "supplier_companyName", nullable = false)
-	private Supplier supplier;*/
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "product_productId", nullable = false)
+	private Product product;
 	
 	Part() {}
 	
-	Part(Integer partId, String name, String description, String companyName){
+	Part(Integer partId, String name, String description, String companyName, Integer productId){
 		this.partId = partId;
 		this.name = name;
 		this.description = description;		
 		this.companyName = companyName;
+		this.productId = productId;
 	}
 	
 	public void setCompanyName(String companyName) {
@@ -40,13 +41,21 @@ public class Part {
 		return this.companyName;
 	}
 	
-	/*public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
-	}*/
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
 	
-	/*public Supplier getSupplier() {
-		return this.supplier;
-	}*/
+	public Integer getProductId() {
+		return this.productId;
+	}
+	
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+	
+	public Product getProduct() {
+		return this.product;
+	}
 	
 	public String getName() {
 		return this.name;

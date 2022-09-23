@@ -19,21 +19,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import InventoryDomainModels.Part;
 import InventoryDomainModels.PartModelAssembler;
+import InventoryDomainModels.Product;
 import InventoryExceptionHandlers.PartNotFoundException;
+import InventoryExceptionHandlers.ProductNotFoundException;
 import InventoryRepos.PartRepository;
+import InventoryRepos.ProductRepository;
 
 @RestController
 public class PartController{
 	
-	//private final SupplierRepository suppRepository;
+	private final ProductRepository prodRepository;
 	
 	private final PartRepository repository;
 	private final PartModelAssembler assembler;
 	
-	PartController(PartRepository repository, PartModelAssembler assembler) {
+	PartController(PartRepository repository, PartModelAssembler assembler, ProductRepository prodRepository) {
 		this.repository = repository;
 		this.assembler = assembler;
-		//this.suppRepository = suppRepository;
+		this.prodRepository = prodRepository;
 		
 	}
 	
@@ -48,11 +51,8 @@ public class PartController{
 	
 	@PostMapping("/parts")
 	ResponseEntity<?> newPart(@RequestBody Part newPart) {
-		//Supplier newSupp = suppRepository.findById(newPart.getCompanyName()).orElseThrow(() -> new SupplierNotFoundException(newPart.getCompanyName()));
-		//newPart.setSupplier(newSupp);
-		
-//		suppRepository.findById(newContact.getCompanyName()).orElseThrow(() -> new SupplierNotFoundException(newContact.getCompanyName())).pushContact(newContact);
-//		newSupp.pushContact(newContact);
+		Product newProd = prodRepository.findById(newPart.getProductId()).orElseThrow(() -> new ProductNotFoundException(newPart.getProductId()));
+		newPart.setProduct(newProd);
 		
 		EntityModel<Part> entityModel = assembler.toModel(repository.save(newPart));		
 		
@@ -76,6 +76,7 @@ public class PartController{
 					part.setName(newPart.getName());
 					part.setDescription(newPart.getDescription());					
 					part.setCompanyName(newPart.getCompanyName());
+					part.setProductId(newPart.getProductId());
 					return repository.save(part);
 				}) //
 				.orElseGet(() -> {

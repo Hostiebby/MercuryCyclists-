@@ -1,6 +1,7 @@
 package InventoryControllers;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.hateoas.EntityModel;
@@ -51,22 +52,17 @@ public class ProductController{
 	
 	@PostMapping("/products")
 	ResponseEntity<?> newProduct(@RequestBody Product newProduct) {
-		Part newPart = partRepository.findById(newProduct.getPartId()).orElseThrow(() -> new ProductNotFoundException(newProduct.getPartId()));
-		newProduct.setPart(newPart);
-		
-//		suppRepository.findById(newContact.getCompanyName()).orElseThrow(() -> new SupplierNotFoundException(newContact.getCompanyName())).pushContact(newContact);
-//		newSupp.pushContact(newContact);
-		
-		EntityModel<Product> entityModel = assembler.toModel(repository.save(newProduct));		
-		
+		  
+		EntityModel<Product> entityModel = assembler.toModel(repository.save(newProduct));
+		  
 		return ResponseEntity //
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-				.body(EntityModel.of(entityModel));
-	}	
+				.body(entityModel);
+	}
 	
 	@GetMapping("/products/{productId}")
 	public EntityModel<Product> one(@PathVariable Integer productId) {
-		Product product = repository.findById(productId) //
+		Product product = repository.findById(productId) 
 				.orElseThrow(() -> new ProductNotFoundException(productId));
 		return assembler.toModel(product);
 	}
@@ -79,7 +75,6 @@ public class ProductController{
 					product.setName(newProduct.getName());
 					product.setPrice(newProduct.getPrice());
 					product.setComment(newProduct.getComment());
-					product.setPartId(newProduct.getPartId());
 					return repository.save(product);
 				}) //
 				.orElseGet(() -> {
@@ -92,6 +87,16 @@ public class ProductController{
 				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
 				.body(entityModel);
 	}
+	
+	@GetMapping("/products/{productId}/parts")
+	public Set<Part> parts(@PathVariable Integer productId) {
+		return repository.findById(productId)
+				.orElseThrow(() -> new ProductNotFoundException(productId))
+				.displayParts();
+	}
+	
+	@PutMapping("/products/{productId}/parts/{partId}")
+	//implement function to update specific parts of  a product??
 	
 	@DeleteMapping("/products/{productId}")
 	ResponseEntity<?> deleteProduct(@PathVariable Integer productId) {

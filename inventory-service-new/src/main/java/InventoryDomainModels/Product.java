@@ -1,28 +1,29 @@
 package InventoryDomainModels;
 
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name = "products")
 public class Product {
-	
+	@Column(unique=true)
 	private @Id Integer productId;
 	private String name;
 	private Float price;
 	private String comment;
-	private Integer partId;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "part_partId", nullable = false)
-	private Part part;
+	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Part> parts;
 	
 	Product() {}
 	
@@ -31,23 +32,14 @@ public class Product {
 		this.name = name;
 		this.price = price;
 		this.comment = comment;
-		this.partId = partId;
 	}
 	
-	public void setPartId(Integer partId) {
-		this.partId = partId;
+	public Set<Part> displayParts() {
+		return this.parts;
 	}
 	
-	public Integer getPartId() {
-		return this.partId;
-	}
-	
-	public void setPart(Part part) {
-		this.part = part;
-	}
-	
-	public Part getPart() {
-		return this.part;
+	public void pushPart(Part part) {
+		this.parts.add(part);
 	}
 	
 	public Integer getProductId() {
@@ -93,12 +85,11 @@ public class Product {
 	    return Objects.equals(this.productId, product.productId) && 
 	    		Objects.equals(this.name, product.name) &&
 	    		Objects.equals(this.price,  product.price) &&
-	    		Objects.equals(this.comment, product.comment) &&
-	    		Objects.equals(this.part, product.part);
+	    		Objects.equals(this.comment, product.comment);
 	  }
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.productId, this.name, this.price, this.comment, this.part);
+		return Objects.hash(this.productId, this.name, this.price, this.comment);
 	}
 }

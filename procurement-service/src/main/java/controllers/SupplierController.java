@@ -95,21 +95,13 @@ public class SupplierController{
 				.displayContacts();
 	}
 	
-	@PutMapping("suppliers/{companyName}/contacts/{name}")
+	@PutMapping("/suppliers/{companyName}/contacts/{name}")
+	//implement function to update specific contacts of a supplier
 
 	  @DeleteMapping("/suppliers/{companyName}")
 	  ResponseEntity<?> deleteSupplier(@PathVariable String companyName) {
 	    repository.deleteById(companyName);
 	    return ResponseEntity.noContent().build();
-	  }
-	
-	//Part request
-	/*@GetMapping("/suppliers/parts/{partId}")
-	public Supplier partSupplier(@PathVariable("partId") Integer partId){
-		Part getPart = apiServices.getPart(partId);
-		return repository.findById(getPart.getCompanyName()).get();				
-				
-	}*/
-	  
+	  }  
 }
 

@@ -52,9 +52,6 @@ public class ContactController{
 		Supplier newSupp = suppRepository.findById(newContact.getCompanyName()).orElseThrow(() -> new SupplierNotFoundException(newContact.getCompanyName()));
 		newContact.setSupplier(newSupp);
 		
-//		suppRepository.findById(newContact.getCompanyName()).orElseThrow(() -> new SupplierNotFoundException(newContact.getCompanyName())).pushContact(newContact);
-//		newSupp.pushContact(newContact);
-		
 		EntityModel<Contact> entityModel = assembler.toModel(repository.save(newContact));		
 		
 		return ResponseEntity //
