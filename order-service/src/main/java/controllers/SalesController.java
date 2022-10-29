@@ -22,11 +22,13 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 
 @RestController
-//@RequestMapping("/sales")
 public class SalesController {	
 	
 	private final SaleRepository repository;
 	private final SaleModelAssembler assembler;
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	SalesController(SaleRepository repository, SaleModelAssembler assembler){		
 		this.repository = repository;
@@ -35,7 +37,7 @@ public class SalesController {
 	
 	@PostMapping("/sales")
 	//@ResponseStatus(HttpStatus.CREATED)	
-	ResponseEntity<?> newProduct(@RequestBody Sale newSale) {
+	ResponseEntity<?> newSale(@RequestBody Sale newSale) {
 		  
 		EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
 		  

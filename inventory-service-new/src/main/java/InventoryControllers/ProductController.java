@@ -68,6 +68,7 @@ public class ProductController{
 					product.setName(newProduct.getName());
 					product.setPrice(newProduct.getPrice());
 					product.setComment(newProduct.getComment());
+					product.setStockOnHand(newProduct.getStockOnHand());)
 					return repository.save(product);
 				}) //
 				.orElseGet(() -> {
@@ -87,9 +88,6 @@ public class ProductController{
 				.orElseThrow(() -> new ProductNotFoundException(productId))
 				.displayParts();
 	}
-	
-	@PutMapping("/products/{productId}/parts/{partId}")
-	//implement function to update specific parts of  a product??
 	
 	@DeleteMapping("/products/{productId}")
 	ResponseEntity<?> deleteProduct(@PathVariable Integer productId) {

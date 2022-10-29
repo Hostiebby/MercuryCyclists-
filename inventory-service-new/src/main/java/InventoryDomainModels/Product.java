@@ -21,17 +21,27 @@ public class Product {
 	private String name;
 	private Float price;
 	private String comment;
+	private Integer stockOnHand;
 	
 	@OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Part> parts;
 	
 	Product() {}
 	
-	Product(Integer productId, String name, Float price, String comment, Integer partId){
+	Product(Integer productId, String name, Float price, String comment, Integer stockOnHand){
 		this.productId = productId;
 		this.name = name;
 		this.price = price;
 		this.comment = comment;
+		this.stockOnHand = stockOnHand;
+	}
+	
+	public void setStockOnHand(Integer stockOnHand) {
+		this.stockOnHand = stockOnHand;
+	}
+	
+	public Integer getStockOnHand() {
+		return this.stockOnHand;
 	}
 	
 	public Set<Part> displayParts() {
@@ -85,11 +95,12 @@ public class Product {
 	    return Objects.equals(this.productId, product.productId) && 
 	    		Objects.equals(this.name, product.name) &&
 	    		Objects.equals(this.price,  product.price) &&
-	    		Objects.equals(this.comment, product.comment);
+	    		Objects.equals(this.comment, product.comment) &&
+	    		Objects.equals(this.stockOnHand, product.stockOnHand);
 	  }
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.productId, this.name, this.price, this.comment);
+		return Objects.hash(this.productId, this.name, this.price, this.comment, this.stockOnHand);
 	}
 }

@@ -17,6 +17,7 @@ public class Part {
 	private String name;
 	private String description;
 	private String companyName;
+	private Integer stockOnHand;
 	private Integer productId;
 	
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -25,12 +26,21 @@ public class Part {
 	
 	Part() {}
 	
-	Part(Integer partId, String name, String description, String companyName, Integer productId){
+	Part(Integer partId, String name, String description, String companyName, Integer stockOnHand, Integer productId){
 		this.partId = partId;
 		this.name = name;
 		this.description = description;		
 		this.companyName = companyName;
+		this.stockOnHand = stockOnHand;
 		this.productId = productId;
+	}
+	
+	public void setStockOnHand(Integer stockOnHand) {
+		this.stockOnHand = stockOnHand;
+	}
+	
+	public Integer getStockOnHand() {
+		return this.stockOnHand;
 	}
 	
 	public void setCompanyName(String companyName) {
@@ -92,11 +102,12 @@ public class Part {
 	    return Objects.equals(this.partId, part.partId) && 
 	    		Objects.equals(this.name, part.name) &&
 	    		Objects.equals(this.description,  part.description) &&
-	    		Objects.equals(this.companyName, part.companyName);
+	    		Objects.equals(this.companyName, part.companyName) &&
+	    		Objects.equals(this.stockOnHand, part.stockOnHand);
 	  }
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.partId, this.name, this.description, this.companyName);
+		return Objects.hash(this.partId, this.name, this.description, this.companyName, this.stockOnHand);
 	}
 }
