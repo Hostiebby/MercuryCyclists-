@@ -2,6 +2,7 @@ package domainModels;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,33 +18,33 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import domainModels.ProductItems;
-
 @Entity
 @Table(name = "sales")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Sale {
 	
 	
 	@Id	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long salesId;	
-	private String SalesNumber;
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer salesId;	
+	//private String SalesNumber;
 	private Integer quantity;  
 	private Date dataTime; 
-	@OneToMany(cascade = CascadeType.ALL)
-	private static List<ProductItems> productLineItems;
 	
+	//@OneToMany(cascade = CascadeType.ALL)
+	//private static List<ProductItems> productLineItems;
 	
-	public String getSalesNumber() {
-		return SalesNumber;
+	Sale() {}
+	
+	Sale(Integer salesId, Integer quantity, Date dataTime){
+		this.salesId = salesId;
+		this.quantity = quantity;
+		this.dataTime = dataTime;		
 	}
-	public void setSalesNumber(String salesNumber) {
-		SalesNumber = salesNumber;
+	
+	public Integer getSalesId() {
+		return this.salesId;
 	}
+	
 	public Integer getQuantity() {
 		return quantity;
 	}
@@ -55,13 +56,25 @@ public class Sale {
 	}
 	public void setDataTime(Date dataTime) {
 		this.dataTime = dataTime;
-	}
+	}	
 	
-	public List<ProductItems> getProductLineItems() {
-		return productLineItems;
-	}
-	public void setProductLineItems(List<ProductItems> productLineItems) {
-		this.productLineItems = productLineItems;
+	@Override
+	public boolean equals(Object o) {
+
+		if (this == o)
+			return true;
+	    if (!(o instanceof Sale))
+	    	return false;
+	    Sale sale = (Sale) o;
+	    return Objects.equals(this.salesId, sale.salesId) && 
+	    		Objects.equals(this.quantity, sale.quantity) &&
+	    		Objects.equals(this.dataTime,  sale.dataTime);
+	    		
+	  }
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.salesId, this.quantity, this.dataTime);
 	}
 	
 

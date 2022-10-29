@@ -1,0 +1,13 @@
+InventoryDomainModels\Product.class
+InventoryControllers\PartController.class
+InventoryDomainModels\PartModelAssembler.class
+com\MercuryCyclists\Inventoryservice\InventoryServiceApplication.class
+InventoryControllers\ProductController.class
+InventoryDomainModels\Part.class
+InventoryExceptionHandlers\PartNotFoundAdvice.class
+InventoryExceptionHandlers\PartNotFoundException.class
+InventoryDomainModels\ProductModelAssembler.class
+InventoryExceptionHandlers\ProductNotFoundAdvice.class
+InventoryExceptionHandlers\ProductNotFoundException.class
+InventoryRepos\ProductRepository.class
+InventoryRepos\PartRepository.class
