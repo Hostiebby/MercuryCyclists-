@@ -19,30 +19,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "sales")
 public class Sale {
 	
 	
 	@Id	
 	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer salesId;	
-	//private String SalesNumber;
+	private Integer productId;
 	private Integer quantity;  
 	private Date dataTime; 
 	
-	//@OneToMany(cascade = CascadeType.ALL)
-	//private static List<ProductItems> productLineItems;
-	
 	Sale() {}
 	
-	Sale(Integer salesId, Integer quantity, Date dataTime){
+	Sale(Integer salesId, Integer productId, Integer quantity, Date dataTime){
 		this.salesId = salesId;
+		this.productId = productId;
 		this.quantity = quantity;
 		this.dataTime = dataTime;		
 	}
 	
 	public Integer getSalesId() {
 		return this.salesId;
+	}
+	
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+	public void getProductId(Integer productId) {
+		return this.productId;
 	}
 	
 	public Integer getQuantity() {
@@ -66,7 +70,8 @@ public class Sale {
 	    if (!(o instanceof Sale))
 	    	return false;
 	    Sale sale = (Sale) o;
-	    return Objects.equals(this.salesId, sale.salesId) && 
+	    return Objects.equals(this.salesId, sale.salesId) &&
+	    		Objects.equals(this.producId, sale.productId) &&
 	    		Objects.equals(this.quantity, sale.quantity) &&
 	    		Objects.equals(this.dataTime,  sale.dataTime);
 	    		
@@ -74,7 +79,7 @@ public class Sale {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.salesId, this.quantity, this.dataTime);
+		return Objects.hash(this.salesId, this.productId, this.quantity, this.dataTime);
 	}
 	
 

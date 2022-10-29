@@ -38,7 +38,19 @@ public class SalesController {
 	@PostMapping("/sales")
 	//@ResponseStatus(HttpStatus.CREATED)	
 	ResponseEntity<?> newSale(@RequestBody Sale newSale) {
-		  
+		 String url = "http://localhost:8081/products";
+		 ResponseEntity<String> reponse = restTemplate.getForEntity(url + sale.getProductId, String.class);
+		 String productJsonString = response.getBody();
+		 
+		 JSONParser parser = new JSONParser();
+		 Object obj = parser.parse(productJsonString);
+		 JSONArray array = (JSONArray)obj;
+		 Integer productQuantity = array.get("stockOnHand");
+		 
+		System.out.println(productQuantity);
+		
+		
+		//will use this later, keeping here for now to be able to copy and paste to where I want it to be later.
 		EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
 		  
 		return ResponseEntity //
