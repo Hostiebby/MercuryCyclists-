@@ -68,7 +68,7 @@ public class ProductController{
 					product.setName(newProduct.getName());
 					product.setPrice(newProduct.getPrice());
 					product.setComment(newProduct.getComment());
-					product.setStockOnHand(newProduct.getStockOnHand());)
+					product.setStockOnHand(newProduct.getStockOnHand());
 					return repository.save(product);
 				}) //
 				.orElseGet(() -> {

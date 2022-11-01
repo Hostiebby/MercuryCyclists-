@@ -1,17 +1,20 @@
 package domainModels;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
-
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,28 +22,42 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "sales")
+//@Table(name = "sales")
 public class Sale {
 	
 	
 	@Id	
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer salesId;	
-	//private String SalesNumber;
-	private Integer quantity;  
-	private Date dataTime; 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer salesId;		
+	private Integer quantity; 	
+	private Integer productId;
 	
-	//@OneToMany(cascade = CascadeType.ALL)
-	//private static List<ProductItems> productLineItems;
+	@Temporal(TemporalType.TIMESTAMP)
+	//@Column(nullable = false)
+	private Date dataTime;
+	
+	@PrePersist
+	private void onCreate() {
+		dataTime = new Date();
+	}
 	
 	Sale() {}
 	
-	Sale(Integer salesId, Integer quantity, Date dataTime){
+	Sale(Integer salesId, Integer quantity, Date dataTime, Integer productId){
 		this.salesId = salesId;
 		this.quantity = quantity;
-		this.dataTime = dataTime;		
+		this.dataTime = dataTime;
+		this.productId = productId;
 	}
 	
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
 	public Integer getSalesId() {
 		return this.salesId;
 	}
@@ -68,13 +85,14 @@ public class Sale {
 	    Sale sale = (Sale) o;
 	    return Objects.equals(this.salesId, sale.salesId) && 
 	    		Objects.equals(this.quantity, sale.quantity) &&
-	    		Objects.equals(this.dataTime,  sale.dataTime);
+	    		Objects.equals(this.dataTime,  sale.dataTime) &&
+	    		Objects.equals(this.productId,  sale.productId);
 	    		
 	  }
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.salesId, this.quantity, this.dataTime);
+		return Objects.hash(this.salesId, this.quantity, this.dataTime, this.productId);
 	}
 	
 
