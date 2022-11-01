@@ -83,6 +83,8 @@ public class PartController{
 					part.setCompanyName(newPart.getCompanyName());
 					part.setStockOnHand(newPart.getStockOnHand());
 					part.setProductId(newPart.getProductId());
+					part.setProductId(newPart.getProductId());
+
 					return repository.save(part);
 				}) //
 				.orElseGet(() -> {

@@ -62,8 +62,8 @@ public class SalesController {
 		/*String partUrl = "http://localhost:8081/products/";
 		ResponseEntity<Part[]> getPart = restTemplate.getForEntity(partUrl + newSale.getProductId() + "/parts", Part[].class);
 		Part[] part = getPart.getBody();*/
-		//Map<?, ?> partMap = getPart.getBody();
-			
+		//Map<?, ?> partMap = getPart.getBody();	
+		
 		
 		EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
 		

@@ -23,6 +23,7 @@ import lombok.Setter;
 
 @Entity
 //@Table(name = "sales")
+
 public class Sale {
 	
 	
@@ -39,27 +40,28 @@ public class Sale {
 	@PrePersist
 	private void onCreate() {
 		dataTime = new Date();
-	}
+	}	
 	
 	Sale() {}
 	
-	Sale(Integer salesId, Integer quantity, Date dataTime, Integer productId){
-		this.salesId = salesId;
-		this.quantity = quantity;
-		this.dataTime = dataTime;
-		this.productId = productId;
-	}
-	
-	public Integer getProductId() {
-		return productId;
-	}
+	Sale(Integer salesId, Integer productId, Integer quantity){
 
-	public void setProductId(Integer productId) {
+		this.salesId = salesId;
 		this.productId = productId;
+		this.quantity = quantity;	
+		
 	}
+		
 
 	public Integer getSalesId() {
 		return this.salesId;
+	}
+	
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+	public Integer getProductId() {
+		return this.productId;
 	}
 	
 	public Integer getQuantity() {
@@ -83,7 +85,8 @@ public class Sale {
 	    if (!(o instanceof Sale))
 	    	return false;
 	    Sale sale = (Sale) o;
-	    return Objects.equals(this.salesId, sale.salesId) && 
+	    return Objects.equals(this.salesId, sale.salesId) &&
+	    		Objects.equals(this.productId, sale.productId) &&
 	    		Objects.equals(this.quantity, sale.quantity) &&
 	    		Objects.equals(this.dataTime,  sale.dataTime) &&
 	    		Objects.equals(this.productId,  sale.productId);
@@ -92,7 +95,9 @@ public class Sale {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.salesId, this.quantity, this.dataTime, this.productId);
+
+		return Objects.hash(this.salesId, this.quantity, this.dataTime, this.productId);		
+
 	}
 	
 
