@@ -22,8 +22,7 @@ import domainModels.Supplier;
 import domainModels.SupplierModelAssembler;
 import exceptionHandlers.SupplierNotFoundException;
 import repos.SupplierRepository;
-import services.ApiServices;
-import services.Part;
+
 
 @RestController
 public class SupplierController{
@@ -32,7 +31,6 @@ public class SupplierController{
 	
 	private final SupplierModelAssembler assembler;
 	
-	private ApiServices apiServices;
 	
 	SupplierController(SupplierRepository repository, SupplierModelAssembler assembler) {
 		this.repository = repository;
