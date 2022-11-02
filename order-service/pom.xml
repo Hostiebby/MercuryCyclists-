@@ -71,6 +71,10 @@
 			<artifactId>json</artifactId>
 			<version>20160810</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+		</dependency>
 	</dependencies>
 	
 	<build>

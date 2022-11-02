@@ -7,23 +7,27 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
+import domainModels.Store;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-//@Table(name = "sales")
-
+@Table(name  = "sales")
 public class Sale {
 	
 	
@@ -32,9 +36,13 @@ public class Sale {
 	private Integer salesId;		
 	private Integer quantity; 	
 	private Integer productId;
+	private Integer storeId;
+	
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "store_storeId", nullable = false)
+	private Store store;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	//@Column(nullable = false)
 	private Date dataTime;
 	
 	@PrePersist
@@ -44,14 +52,27 @@ public class Sale {
 	
 	Sale() {}
 	
-	Sale(Integer salesId, Integer productId, Integer quantity){
+	Sale(Integer salesId, Integer productId, Integer quantity, Integer storeId){
 
 		this.salesId = salesId;
 		this.productId = productId;
 		this.quantity = quantity;	
-		
+		this.storeId = storeId;
 	}
-		
+	
+	public void setStore(Store store) {
+		this.store = store;
+	}
+	public Store getStore() {
+		return this.store;
+	}
+	
+	public void setStoreId(Integer storeId) {
+		this.storeId = storeId;
+	}
+	public Integer getStoreId() {
+		return this.storeId;
+	}
 
 	public Integer getSalesId() {
 		return this.salesId;

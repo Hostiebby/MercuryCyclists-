@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import domainModels.Store;
+import exceptionhandlers.StoreNotFoundException;
 import domainModels.Sale;
 import domainModels.SaleModelAssembler;
 import exceptionhandlers.SaleNotFoundException;
 import repos.SaleRepository;
+import repos.StoreRepository;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -35,15 +38,18 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class SalesController {	
 	
+	private final StoreRepository storeRepo;
+	
 	private final SaleRepository repository;
 	private final SaleModelAssembler assembler;
 	
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	SalesController(SaleRepository repository, SaleModelAssembler assembler){		
+	SalesController(SaleRepository repository, SaleModelAssembler assembler, StoreRepository storeRepo){		
 		this.repository = repository;
 		this.assembler = assembler;
+		this.storeRepo = storeRepo;
 	}
 	
 	@PostMapping("/sales")
@@ -70,6 +76,9 @@ public class SalesController {
 		}
 		
 		if(productStock >= newSale.getQuantity()) {
+			Store newStore = storeRepo.findById(newSale.getStoreId()).orElseThrow(() -> new StoreNotFoundException(newSale.getStoreId()));
+			newSale.setStore(newStore);
+			
 			EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
 			
 			return ResponseEntity //
@@ -78,7 +87,8 @@ public class SalesController {
 		}
 		else if(checkPartStock) {
 			System.out.print("Product out of stock but available for back order as parts are available.");
-			
+			Store newStore = storeRepo.findById(newSale.getStoreId()).orElseThrow(() -> new StoreNotFoundException(newSale.getStoreId()));
+			newSale.setStore(newStore);
 			EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
 			
 			return ResponseEntity //
