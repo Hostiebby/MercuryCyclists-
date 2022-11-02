@@ -37,7 +37,6 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -70,11 +69,17 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20160810</version>
+<<<<<<< HEAD
 		</dependency>
 		<dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-streams</artifactId>
 		</dependency>
+=======
+		</dependency>	
+				
+		
+>>>>>>> branch 'main' of https://github.com/Hostiebby/MercuryCyclists-.git
 	</dependencies>
 	
 	<build>

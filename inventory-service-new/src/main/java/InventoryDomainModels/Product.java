@@ -19,7 +19,7 @@ public class Product {
 	@Column(unique=true)
 	private @Id Integer productId;
 	private String name;
-	private Float price;
+	private Double price;
 	private String comment;
 	private Integer stockOnHand;
 	
@@ -28,7 +28,7 @@ public class Product {
 	
 	Product() {}
 	
-	Product(Integer productId, String name, Float price, String comment, Integer stockOnHand){
+	public Product(Integer productId, String name, Double price, String comment, Integer stockOnHand){
 		this.productId = productId;
 		this.name = name;
 		this.price = price;
@@ -60,7 +60,7 @@ public class Product {
 		return this.name;
 	}
 	
-	public Float getPrice() {
+	public Double getPrice() {
 		return this.price;
 	}
 	
@@ -76,7 +76,7 @@ public class Product {
 		this.name = name;
 	}
 	
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	
