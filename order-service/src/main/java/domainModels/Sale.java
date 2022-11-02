@@ -44,9 +44,9 @@ public class Sale {
 	
 	Sale() {}
 	
-	Sale(Integer salesId, Integer productId, Integer quantity){
+	public Sale(Integer productId, Integer quantity){
 
-		this.salesId = salesId;
+		//this.salesId = salesId;
 		this.productId = productId;
 		this.quantity = quantity;	
 		

@@ -1,5 +1,8 @@
 package com.MercuryCyclists.Inventoryservice;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -31,5 +34,20 @@ public class InventoryServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(InventoryServiceApplication.class, args);
 	}
+	
+	private static final Logger log = LoggerFactory.getLogger(InventoryServiceApplication.class);
+	
+
+  @Bean
+  CommandLineRunner initDatabase(ProductRepository repository) {
+
+    return args -> {
+      log.info("Preloading " + repository.save(new Product(333, "Drifter v5", 125.99, "Turn handles and ride", 20)));
+      log.info("Preloading " + repository.save(new Product(444, "Skid v2", 299.99, "comes with helmet", 25)));
+      log.info("Preloading " + repository.save(new Product(555, "skidmark v8", 349.99, "For serious bikers", 15)));
+    };
+    
+  }	
+	
 
 }
