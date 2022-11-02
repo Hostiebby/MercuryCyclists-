@@ -19,6 +19,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.json.JSONObject;
+import org.json.JSONArray;
+//import org.json.parser.ParseException;
+//import org.json.parser.JSONParser;
+
 import org.hibernate.annotations.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.parser.Part;
@@ -49,28 +54,43 @@ public class SalesController {
 		ResponseEntity<Map> getProduct = restTemplate.getForEntity(productUrl + newSale.getProductId(), Map.class);
 		Map<?, ?> productMap = getProduct.getBody();
 		int productStock = (int) productMap.get("stockOnHand");
-		if(productStock >= 1) {
+		
+		String getPartsJson = restTemplate.getForObject(productUrl + newSale.getProductId() + "/parts", String.class);
+		
+		JSONArray partsArray = new JSONArray(getPartsJson);
+		boolean checkPartStock = true;
+		for(Object o : partsArray) {
+			if(o instanceof JSONObject) {
+				JSONObject part = (JSONObject)o;
+				int stock = part.getInt("stockOnHand");
+				System.out.print(stock);
+				if(!(stock >= newSale.getQuantity())) {
+					checkPartStock = false;
+				}
+			}
+		}
+		
+		if(productStock >= newSale.getQuantity()) {
+			EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
 			
+			return ResponseEntity //
+					.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+					.body(entityModel);	
+		}
+		else if(checkPartStock) {
+			System.out.print("Product out of stock but available for back order as parts are available.");
+			
+			EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
+			
+			return ResponseEntity //
+					.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+					.body(entityModel);	
 		}
 		else {
 			return ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
 					.body("Error: No stock on hand");
-		}
-		
-				
-		/*String partUrl = "http://localhost:8081/products/";
-		ResponseEntity<Part[]> getPart = restTemplate.getForEntity(partUrl + newSale.getProductId() + "/parts", Part[].class);
-		Part[] part = getPart.getBody();*/
-		//Map<?, ?> partMap = getPart.getBody();	
-		
-		
-		EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
-		
-		return ResponseEntity //
-				.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-				.body(entityModel);		  
-		
+		}		
 	}
 	
 	
