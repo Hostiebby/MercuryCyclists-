@@ -77,7 +77,7 @@ public class SalesController {
 		
 		if(productStock >= newSale.getQuantity()) {
 			Store newStore = storeRepo.findById(newSale.getStoreId()).orElseThrow(() -> new StoreNotFoundException(newSale.getStoreId()));
-			newSale.setStore(newStore);
+			//newSale.setStore(newStore);
 			
 			EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
 			
@@ -88,7 +88,7 @@ public class SalesController {
 		else if(checkPartStock) {
 			System.out.print("Product out of stock but available for back order as parts are available.");
 			Store newStore = storeRepo.findById(newSale.getStoreId()).orElseThrow(() -> new StoreNotFoundException(newSale.getStoreId()));
-			newSale.setStore(newStore);
+			//newSale.setStore(newStore);
 			EntityModel<Sale> entityModel = assembler.toModel(repository.save(newSale));
 			
 			return ResponseEntity //

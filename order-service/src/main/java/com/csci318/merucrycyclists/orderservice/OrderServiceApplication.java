@@ -3,6 +3,7 @@ package com.csci318.merucrycyclists.orderservice;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ import domainModels.Store;
 import domainModels.StoreModelAssembler;
 import repos.SaleRepository;
 import repos.StoreRepository;
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 @SpringBootApplication
 @ComponentScan(basePackageClasses = { 
@@ -48,10 +51,7 @@ public class OrderServiceApplication {
 	
 	private static final Logger log = LoggerFactory.getLogger(OrderServiceApplication.class);
 	
-	List<Integer> getProduct = Arrays.asList(333, 444, 555);
-	Integer rProduct = getProduct.get(new Random().nextInt(getProduct.size()));
-	
-	Integer rQuantity = Math.random() > .5 ? 1:5;
+	List<Integer> getProduct = Arrays.asList(333, 444, 555);	
 	
 
 	  @Bean
@@ -59,6 +59,15 @@ public class OrderServiceApplication {
 
 	    return args -> {
 	      log.info("Initialise store " + storeRepository.save(new Store("somewhere st", "Greg")));
+	      
+	      //Integer rProduct = getProduct.get(new Random().nextInt(getProduct.size()));
+	  	
+	  	  //Integer rQuantity = Math.random() > .5 ? 1:5;
+	      
+	      Observable.interval(2, TimeUnit.SECONDS, Schedulers.io())
+	      		.observeOn(Schedulers.newThread())
+	      		.subscribe(s -> log.info("New sale " + saleRepository.save(new Sale(getProduct.get(new Random().nextInt(getProduct.size())), Math.random() > .5 ? 1:5, 1))));
+	      		
 	      //log.info("New sale " + saleRepository.save(new Sale(rProduct, rQuantity, 1)));
 	      //log.info("New Sale " + repository.save(new Sale(444, 2)));
 	      //log.info("New Sale " + repository.save(new Sale(555, 2)));

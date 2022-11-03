@@ -29,8 +29,8 @@ public class Store {
 	 private String address;
 	 private String manager;
 	 
-	 @OneToMany(mappedBy = "store", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	 private Set<Sale> sales;
+	 /*@OneToMany(mappedBy = "store", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	 private Set<Sale> sales;*/
 	 
 	 public Store() {}
 	 

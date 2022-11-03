@@ -38,9 +38,9 @@ public class Sale {
 	private Integer productId;
 	private Integer storeId;
 	
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	/*@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "store_storeId", nullable = false)
-	private Store store;
+	private Store store;*/
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataTime;
@@ -61,12 +61,12 @@ public class Sale {
 		this.storeId = storeId;
 	}
 	
-	public void setStore(Store store) {
+	/*public void setStore(Store store) {
 		this.store = store;
 	}
 	public Store getStore() {
 		return this.store;
-	}
+	}*/
 	
 	public void setStoreId(Integer storeId) {
 		this.storeId = storeId;
