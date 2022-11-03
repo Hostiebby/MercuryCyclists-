@@ -52,11 +52,8 @@ public class Sale {
 	
 	Sale() {}
 	
-<<<<<<< HEAD
-	Sale(Integer salesId, Integer productId, Integer quantity, Integer storeId){
-=======
-	public Sale(Integer productId, Integer quantity){
->>>>>>> branch 'main' of https://github.com/Hostiebby/MercuryCyclists-.git
+
+	public Sale(Integer productId, Integer quantity, Integer storeId){
 
 		//this.salesId = salesId;
 		this.productId = productId;

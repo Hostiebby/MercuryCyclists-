@@ -32,9 +32,9 @@ public class Store {
 	 @OneToMany(mappedBy = "store", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	 private Set<Sale> sales;
 	 
-	 Store() {}
+	 public Store() {}
 	 
-	 Store(String address, String manager) {
+	 public Store(String address, String manager) {
 		 this.address = address;
 		 this.manager = manager;
 	 }
